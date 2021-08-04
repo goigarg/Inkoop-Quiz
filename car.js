@@ -1,24 +1,41 @@
-// /There is a car with 50L of petrol.
-var petrol = 50; 
+//There is a car with 50L of petrol.
+var petrol = 50;
 
-//It needs to travel from 0 to 100 KMs.
-var distance = 100; 
+let carDistance = 0;
 
-//The car moves in steps, at each step car can move between 0 KM to 6 KM (generate a random number).
-var carStep = Math.floor(Math.random() * 6) + 1;
+let carStep = 0;
 
 //The car has a mileage of 0.5 KM/L.
-const mileage = 0.5;
+let milage = 0.5;
 
 //Random Petrol Pumps
 var petrolPumps = [];
-for (var i = 0; i < 6; i++) {
-    var num = Math.floor(Math.random() * 20) + 1;
+for (let i = 0; i < 6; i++) {
+    var num = Math.floor(Math.random() * 16.6) + 1;
     petrolPumps.push(Number(petrolPumps.slice(-1)) + num);
 }
-console.log(petrolPumps);
+console.log("Random Petrol Pumps Generated at " + petrolPumps);
 
-//Every time the car reaches the petrol pump exactly, the car gets a refill of 30 L.
-while(petrol != 0) {
-    
-} 
+let move = 1;
+
+//It needs to travel from 0 to 100 KMs.
+while (carDistance<=100) {
+    //car can move between 0 KM to 6 KM
+    carStep = Math.floor(Math.random() * 6) + 1;
+
+    carDistance = carDistance + carStep;
+    petrol = petrol - (carStep/milage);
+
+    //Petrol refill 30L if car reach petrol pump exactly
+    if(petrolPumps.includes(carDistance)){
+        petrol = petrol + 30;
+    }
+
+    if (petrol <= 0) {
+        console.log("Move: " + move + " distance: " + carDistance + " petrol: 0 game over");
+        break;
+    } else {
+        console.log("Move: " + move + " distance: " + carDistance + " petrol: " + petrol);
+    }
+    move++;
+}
